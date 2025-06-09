@@ -1,13 +1,17 @@
+import PlayerPage from "~/Home/components/PlayerPage";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
 
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+ return [
+  { title: "Radio Player App" },
+  { name: "description", content: "Welcome to Radio Player App!" },
+ ];
 }
 
 export default function Home() {
-  return <Welcome />;
+ return (
+  <main className="w-full h-full">
+   <PlayerPage />
+  </main>
+ );
 }

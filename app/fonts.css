@@ -1,0 +1,54 @@
+@layer base {
+    @font-face {
+        font-family: "Peyda";
+        src: url("/fonts/PeydaWeb-Regular.woff2") format("woff2");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PeydaBlack";
+        src: url("/fonts/PeydaWeb-Black.woff2") format("woff2");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PeydaBold";
+        src: url("/fonts/PeydaWeb-Bold.woff2") format("woff2");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PeydaExtraBold";
+        src: url("/fonts/PeydaWeb-ExtraBold.woff2") format("woff2");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PeydaLight";
+        src: url("/fonts/peydaWeb-light.woff2") format("woff2");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PeydaMedium";
+        src: url("/fonts/PeydaWeb-Medium.woff2") format("woff2");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PeydaExtraLight";
+        src: url("/fonts/peydaWeb-extralight.woff2") format("woff2");
+        font-display: swap;
+    }
+         @font-face {
+             font-family: "PeydaThin";
+             src: url("/fonts/PeydaWeb-Thin.woff2") format("woff2");
+             font-display: swap;
+         }
+
+    @font-face {
+        font-family: "PeydaSemiBold";
+        src: url("/fonts/PeydaWeb-SemiBold.woff2") format("woff2");
+        font-display: swap;
+    }
+}
