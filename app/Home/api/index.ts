@@ -1,7 +1,8 @@
 import { fetchInstance } from "~/libs/fetchInstance";
-import { ALL_CHANEL } from "./constants";
-import { useQuery } from "@tanstack/react-query";
+import { ALL_CHANEL, LIKE_MUSIC } from "./constants";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { AllChanelResponse } from "./api.types";
+import queryClient from "~/libs/react-query";
 
 const getAllChanel = async () => {
 
@@ -13,6 +14,18 @@ const getAllChanel = async () => {
     });
     return response;
 };
+
+
+const postLike = async (data: { music_id: number }) => {
+    const response = await fetchInstance<AllChanelResponse>({
+        path: LIKE_MUSIC,
+        options: {
+            method: "POST",
+            body: JSON.stringify(data)
+        },
+    });
+    return response;
+}
 
 export const useGetAllChanelQuery = () => {
     return useQuery({
@@ -34,5 +47,17 @@ export const useGetAllChanelQuery = () => {
             }
             return data;
         },
+        refetchInterval: 5 * 1000
     });
 };
+
+
+export const useLikeMusicMutation = () => {
+    return useMutation({
+        mutationFn: postLike,
+        mutationKey: ["like-music"],
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["all-chanel"] });
+        }
+    })
+}

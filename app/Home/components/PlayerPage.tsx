@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { convertTime } from "~/libs/convertTime";
 import { useGetAllChanelQuery } from "../api";
 import ActionBtns from "./ActionBtns";
@@ -35,6 +35,12 @@ const PlayerPage = () => {
         }
     };
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         refetch()
+    //     }, 5000)
+    // }, [])
+
     return isLoading ? (
         <div className="w-full h-full flex items-center justify-center">
             <div className="h-16 w-16 animate-spin rounded-full border-b-8 border-solid border-neutral-light"></div>
@@ -69,7 +75,7 @@ const PlayerPage = () => {
             </div>
             <div className="h-fit flex w-full items-end">
                 <img
-                    src={data?.channels[selectedChannel]?.current_playing?.cover}
+                    src={data?.channels[selectedChannel]?.current_playing?.cover || "/mic.png"}
                     alt="player-bg"
                     width={266}
                     height={266}
@@ -105,6 +111,8 @@ const PlayerPage = () => {
                             handleVolumeChange={handleVolumeChange}
                             volume={volume}
                             isMuted={isMuted}
+                            hasLike={!!data?.channels[selectedChannel].current_playing.like}
+                            musicId={data?.channels[selectedChannel].current_playing.id}
                         />
                     </div>
                     <div className="w-full hidden  md:flex items-center justify-between relative z-10">
@@ -117,6 +125,8 @@ const PlayerPage = () => {
                         handleVolumeChange={handleVolumeChange}
                         volume={volume}
                         isMuted={isMuted}
+                        hasLike={!!data?.channels[selectedChannel].current_playing.like}
+                        musicId={data?.channels[selectedChannel].current_playing.id}
                     />
                 </div>
             </div>
