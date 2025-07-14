@@ -47,7 +47,7 @@ export const useGetAllChanelQuery = () => {
             }
             return data;
         },
-        refetchInterval: 5 * 1000
+        refetchInterval: import.meta.env.VITE_REFETCH_INTERVAL ? parseInt(import.meta.env.VITE_REFETCH_INTERVAL) : 5 * 1000
     });
 };
 
