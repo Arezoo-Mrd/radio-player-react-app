@@ -3,7 +3,7 @@ type Channel = {
     slug: string;
     description: string;
     stream_address: string;
-    current_playing: {
+    current_playing?: {
         id: number;
         title: string;
         artist: string;
