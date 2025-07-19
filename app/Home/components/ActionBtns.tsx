@@ -7,7 +7,7 @@ import { useLikeMusicMutation } from "../api";
 
 type ActionBtnsProps = {
     toggleMute: () => void;
-    handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleVolumeChange: (newVolume: number) => void;
     volume: number;
     isMuted: boolean;
     className?: string;

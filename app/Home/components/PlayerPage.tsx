@@ -20,8 +20,7 @@ const PlayerPage = () => {
         return data?.channels[selectedChannel]?.stream_address || "";
     }, [data, selectedChannel]);
 
-    const handleVolumeChange = (e: any) => {
-        const newVolume = parseInt(e.target.value);
+    const handleVolumeChange = (newVolume: number) => {
         setVolume(newVolume);
         if (audioRef.current) {
             audioRef.current.volume = newVolume / 100;
@@ -74,7 +73,7 @@ const PlayerPage = () => {
                     alt="player-bg"
                     width={266}
                     height={266}
-                    className=" md:w-[266px] md:h-[266px] w-[100px] h-[149px] object-cover md:object-contain  left-0"
+                    className=" md:w-[266px] md:h-[266px] w-[149px] h-[149px]   left-0"
                 />
                 <div className="h-[140px] md:h-[233px] p-3 md:p-0 flex flex-col md:block justify-between items-center   w-full relative ">
                     <img
@@ -90,7 +89,7 @@ const PlayerPage = () => {
                     </div>
                     <div className="flex items-start  py-3 md:py-[29px]   justify-between w-full">
                         <div className="flex w-full md:w-[72%] flex-col  md:pl-[65px]">
-                            <h6 className="text-xl sm:text-2xl truncate w-[150px] sm:w-[200px] md:w-full md:text-[44px] text-headline-base font-bold md:leading-[100%]">
+                            <h6 className="text-xl sm:text-2xl truncate w-[161px]  md:w-full md:text-[44px] text-headline-base font-bold md:leading-[100%]">
                                 {data?.channels[selectedChannel]?.current_playing?.title}
                             </h6>
                             <p className="text-neutral-light truncate text-sm md:text-xl">
