@@ -4,6 +4,8 @@ import { Heart } from "iconsax-react";
 import VolumeController from "./VolumeController";
 import { twMerge } from "tailwind-merge";
 import { useLikeMusicMutation } from "../api";
+import { toast } from "sonner";
+
 
 type ActionBtnsProps = {
     toggleMute: () => void;
@@ -12,7 +14,6 @@ type ActionBtnsProps = {
     isMuted: boolean;
     className?: string;
     musicId: number | undefined
-    hasLike: boolean
 };
 
 const ActionBtns = ({
@@ -22,9 +23,10 @@ const ActionBtns = ({
     isMuted,
     className,
     musicId,
-    hasLike
+
 }: ActionBtnsProps) => {
     const { mutate: likeMusicMutation, isSuccess } = useLikeMusicMutation()
+
     return (
         <div
             className={twMerge(
@@ -36,12 +38,19 @@ const ActionBtns = ({
                 <LiveBtn />
             </div>
             <div className="flex w-full gap-4 items-center justify-end md:justify-start md:w-auto">
-                <Heart size={24} variant={hasLike ? "Bold" : "Linear"} className="cursor-pointer" color="#FF3A3A" onClick={() => {
+                <Heart size={24} variant={isSuccess ? "Bold" : "Linear"} className="cursor-pointer" color="#FF3A3A" onClick={() => {
 
                     if (musicId) {
-                        console.log("musicId", musicId)
                         likeMusicMutation({
                             music_id: musicId
+                        }, {
+                            onSuccess: (data) => {
+                                toast.success("🙏 از حمایت شما با ثبت لایک صمیمانه سپاسگزاریم. امیدواریم از موزیک لذت برده باشید.")
+
+                            },
+                            onError: (error) => {
+                                toast.error(error.message)
+                            }
                         })
                     }
                 }} />

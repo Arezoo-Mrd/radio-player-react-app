@@ -67,15 +67,15 @@ const PlayerPage = () => {
                     </h5>
                 </div>
             </div>
-            <div className="h-fit flex w-full items-end">
+            <div className="h-fit flex max-w-full   items-end">
                 <img
                     src={data?.channels[selectedChannel]?.current_playing?.cover || "/mic.png"}
                     alt="player-bg"
                     width={266}
                     height={266}
-                    className=" md:w-[266px] md:h-[266px] w-[149px] h-[149px]   left-0"
+                    className=" md:w-[266px] md:h-[266px] w-[140px] h-[140px]   left-0"
                 />
-                <div className="h-[140px] md:h-[233px] p-3 md:p-0 flex flex-col md:block justify-between items-center   w-full relative ">
+                <div className="h-[135px] md:h-[233px] py-3 flex flex-col md:block justify-between items-center   w-full relative ">
                     <img
                         src="/Noise.png"
                         alt="player-bg"
@@ -83,20 +83,20 @@ const PlayerPage = () => {
                     />
 
                     <div className="absolute top-0 right-0   left-0 opacity-[0.3] backdrop-blur-[132px] w-full h-full bg-gradient-to-b from-[#F8BEFC] to-[#F8BEFCB2] to-[70%]"></div>
-                    <div className="flex w-full justify-between">
-                        <div className="w-full md:w-[72%] h-0.5  md:mt-5 bg-white  relative z-10"></div>
-                        <div className="hidden md:block w-1/4 h-0.5 mt-5 bg-white  relative z-10"></div>
+                    <div className="flex w-full bg-white justify-between">
+                        <div className="w-full md:w-[72%] h-0.5 bg-white  relative z-10"></div>
+                        <div className="hidden md:block w-1/4 h-0.5 bg-white  relative z-10"></div>
                     </div>
-                    <div className="flex items-start  py-3 md:py-[29px]   justify-between w-full">
-                        <div className="flex w-full md:w-[72%] flex-col  md:pl-[65px]">
-                            <h6 className="text-xl sm:text-2xl truncate w-[161px]  md:w-full md:text-[44px] text-headline-base font-bold md:leading-[100%]">
+                    <div className="flex items-start px-2  md:px-3 py-3 md:py-[29px]   justify-between w-full">
+                        <div className="flex   max-w-[120px] md:max-w-full md:w-[72%] flex-col  md:pl-[65px]">
+                            <h6 className="text-xl sm:text-2xl truncate  md:w-full md:text-[44px] text-headline-base font-bold md:leading-[100%]">
                                 {data?.channels[selectedChannel]?.current_playing?.title}
                             </h6>
                             <p className="text-neutral-light truncate text-sm md:text-xl">
                                 {data?.channels[selectedChannel]?.current_playing?.artist}
                             </p>
                         </div>
-                        <div className="w-full md:hidden relative z-10">
+                        <div className="w-fit md:hidden relative z-10">
                             <LiveStreamPlayer audioRef={audioRef} streamUrl={currentStreamUrl} />
                         </div>
                         <ActionBtns
@@ -105,23 +105,23 @@ const PlayerPage = () => {
                             handleVolumeChange={handleVolumeChange}
                             volume={volume}
                             isMuted={isMuted}
-                            hasLike={!!data?.channels[selectedChannel].current_playing?.like}
                             musicId={data?.channels[selectedChannel].current_playing?.id}
                         />
                     </div>
-                    <div className="w-full hidden  md:flex items-center justify-between relative z-10">
+                    <div className="w-full px-3 hidden  md:flex items-center justify-between relative z-10">
                         <div className="pl-15">{convertTime(data?.channels[selectedChannel]?.current_playing?.duration || 0)}</div>
                         <LiveStreamPlayer audioRef={audioRef} streamUrl={currentStreamUrl} />
                     </div>
-                    <ActionBtns
-                        className="md:hidden"
-                        toggleMute={toggleMute}
-                        handleVolumeChange={handleVolumeChange}
-                        volume={volume}
-                        isMuted={isMuted}
-                        hasLike={!!data?.channels[selectedChannel].current_playing?.like}
-                        musicId={data?.channels[selectedChannel].current_playing?.id}
-                    />
+                    <div className="px-3 w-full">
+                        <ActionBtns
+                            className="md:hidden"
+                            toggleMute={toggleMute}
+                            handleVolumeChange={handleVolumeChange}
+                            volume={volume}
+                            isMuted={isMuted}
+                            musicId={data?.channels[selectedChannel].current_playing?.id}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
