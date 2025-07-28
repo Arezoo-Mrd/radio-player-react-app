@@ -40,7 +40,7 @@ const VolumeController = ({
         handleVolumeChange(newVolume);
     };
 
-    console.log('volume', volume)
+
 
     const renderVolumeIcon = useMemo(() => {
         if (volume === 0) return <VolumeCross variant="Bold" size={30} color="#3A3A3A" />;

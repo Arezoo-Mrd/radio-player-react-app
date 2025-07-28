@@ -8,7 +8,7 @@ import PlayerBtn from "./PlayerBtn";
 const PlayerPage = () => {
     const { data, isLoading } = useGetAllChanelQuery();
     const [selectedChannel, setSelectedChannel] = useState(0);
-    const [volume, setVolume] = useState(70);
+    const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
 
