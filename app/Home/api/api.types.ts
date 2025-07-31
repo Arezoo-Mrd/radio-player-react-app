@@ -6,12 +6,13 @@ type Channel = {
     current_playing?: {
         id: number;
         title: string;
-        artist: string;
+        artist?: string;
+        description?: string;
         duration: number;
         cover: string;
         like: number;
         ads: boolean;
-        mode: "music";
+        mode: "music" | "live";
     };
 };
 

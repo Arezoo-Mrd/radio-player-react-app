@@ -93,7 +93,7 @@ const PlayerPage = () => {
                                 {data?.channels[selectedChannel]?.current_playing?.title}
                             </h6>
                             <p className="text-neutral-light truncate text-sm md:text-xl">
-                                {data?.channels[selectedChannel]?.current_playing?.artist}
+                                {data?.channels[selectedChannel]?.current_playing?.artist || data?.channels[selectedChannel]?.current_playing?.description || "..."}
                             </p>
                         </div>
                         <div className="w-fit md:hidden relative z-10">
