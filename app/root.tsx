@@ -32,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=1200, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preload" href="https://livemst.com/icons/radioBtn.svg" as="image"></link>
 
         <Meta />
