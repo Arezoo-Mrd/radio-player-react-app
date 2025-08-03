@@ -34,7 +34,6 @@ const PlayerPage = () => {
         }
     };
 
-
     return isLoading ? (
         <div className="w-full h-full flex items-center justify-center">
             <div className="h-16 w-16 animate-spin rounded-full border-b-8 border-solid border-neutral-light"></div>
@@ -93,7 +92,8 @@ const PlayerPage = () => {
                                 {data?.channels[selectedChannel]?.current_playing?.title}
                             </h6>
                             <p className="text-neutral-light truncate text-sm md:text-xl">
-                                {data?.channels[selectedChannel]?.current_playing?.artist || data?.channels[selectedChannel]?.current_playing?.description || "..."}
+                                {data?.channels[selectedChannel]?.current_playing?.artist || data?.channels[selectedChannel]?.current_playing?.
+                                    presenter?.map((presenter) => presenter.name).join(", ") || "..."}
                             </p>
                         </div>
                         <div className="w-fit md:hidden relative z-10">

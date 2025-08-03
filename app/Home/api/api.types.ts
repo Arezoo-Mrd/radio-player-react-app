@@ -7,6 +7,7 @@ type Channel = {
         id: number;
         title: string;
         artist?: string;
+        presenter?: { name: string }[];
         description?: string;
         duration: number;
         cover: string;
