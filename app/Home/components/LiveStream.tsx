@@ -5,11 +5,15 @@ import WaveVisualization from "./WaveVisualization";
 export default function LiveStreamPlayer({
     streamUrl,
     audioRef,
+    isPlaying,
+    setIsPlaying,
 }: {
     streamUrl: string;
     audioRef: React.RefObject<HTMLAudioElement | null>;
+    isPlaying: boolean;
+    setIsPlaying: (isPlaying: boolean) => void;
 }) {
-    const [isPlaying, setIsPlaying] = useState(false);
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const [streamKey, setStreamKey] = useState(0);

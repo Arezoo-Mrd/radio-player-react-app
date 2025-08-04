@@ -10,6 +10,10 @@ const PlayerPage = () => {
     const [selectedChannel, setSelectedChannel] = useState(0);
     const [volume, setVolume] = useState(100);
     const [isMuted, setIsMuted] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+
+
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const changeChannel = (channel: number) => {
@@ -33,6 +37,10 @@ const PlayerPage = () => {
             setIsMuted(!isMuted);
         }
     };
+
+    console.log('isPlaying', isPlaying)
+
+
 
     return isLoading ? (
         <div className="w-full h-full flex items-center justify-center">
@@ -72,7 +80,7 @@ const PlayerPage = () => {
                     alt="player-bg"
                     width={266}
                     height={266}
-                    className=" md:w-[266px] md:h-[266px] w-[140px] h-[140px]   left-0"
+                    className=" md:w-[266px] relative z-40 md:h-[266px] w-[140px] h-[140px]   left-0"
                 />
                 <div className="h-[135px] md:h-[233px] py-3 flex flex-col md:block justify-between items-center   w-full relative ">
                     <img
@@ -82,10 +90,20 @@ const PlayerPage = () => {
                     />
 
                     <div className="absolute top-0 right-0   left-0 opacity-[0.3] backdrop-blur-[132px] w-full h-full bg-gradient-to-b from-[#F8BEFC] to-[#F8BEFCB2] to-[70%]"></div>
-                    <div className="flex w-full bg-white justify-between">
-                        <div className="w-full md:w-[72%] h-0.5 bg-white  relative z-10"></div>
-                        <div className="hidden md:block w-1/4 h-0.5 bg-white  relative z-10"></div>
+                    <div className="flex w-full bg-transparent  relative justify-between">
+                        <div className={`absolute top-0 z-20 left-0 w-full h-full   ${isPlaying ? "bg-white" : ""} `}
+                            style={{ animation: isPlaying ? 'line-segment 2s ease-in-out infinite' : 'none' }}
+                        ></div>
+
+                        <div className={`w-full md:w-[72%] h-0.5 ${isPlaying ? "bg-white/50" : "bg-white"} relative z-10 overflow-hidden`}>
+                        </div>
+
+                        <div className={`hidden md:block w-1/4 h-0.5 ${isPlaying ? "bg-white/50" : "bg-white"} relative z-10 overflow-hidden `}>
+
+                        </div>
                     </div>
+
+
                     <div className="flex items-start px-2  md:px-3 py-3 md:py-[29px]   justify-between w-full">
                         <div className="flex   max-w-[120px] md:max-w-full md:w-[72%] flex-col  md:pl-[65px]">
                             <h6 className="text-xl sm:text-2xl truncate  md:w-full md:text-[44px] text-headline-base font-bold md:leading-[100%]">
@@ -97,7 +115,7 @@ const PlayerPage = () => {
                             </p>
                         </div>
                         <div className="w-fit md:hidden relative z-10">
-                            <LiveStreamPlayer audioRef={audioRef} streamUrl={currentStreamUrl} />
+                            <LiveStreamPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying} audioRef={audioRef} streamUrl={currentStreamUrl} />
                         </div>
                         <ActionBtns
                             className="hidden md:flex"
@@ -110,7 +128,7 @@ const PlayerPage = () => {
                     </div>
                     <div className="w-full px-3 hidden  md:flex items-center justify-between relative z-10">
                         <div className="pl-15">{convertTime(data?.channels[selectedChannel]?.current_playing?.duration || 0)}</div>
-                        <LiveStreamPlayer audioRef={audioRef} streamUrl={currentStreamUrl} />
+                        <LiveStreamPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying} audioRef={audioRef} streamUrl={currentStreamUrl} />
                     </div>
                     <div className="px-3 w-full">
                         <ActionBtns

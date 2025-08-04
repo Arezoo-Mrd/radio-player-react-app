@@ -14,7 +14,6 @@ const PlayPauseBtn = ({
     return (
         <button
             onClick={() => {
-                console.log("clicked");
                 togglePlay();
             }}
             className="md:w-16 md:h-16 w-11 h-11 relative  bg-primary-base  cursor-pointer rounded-full  text-white shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
