@@ -82,7 +82,7 @@ const PlayerPage = () => {
                     height={266}
                     className=" md:w-[266px] relative z-40 md:h-[266px] w-[140px] h-[140px]   left-0"
                 />
-                <div className="h-[135px] md:h-[233px] py-3 flex flex-col md:block justify-between items-center   w-full relative ">
+                <div className="h-[135px] md:h-[233px] py-3 flex flex-col md:block justify-between items-center   w-full relative overflow-hidden">
                     <img
                         src="/Noise.png"
                         alt="player-bg"
@@ -90,7 +90,7 @@ const PlayerPage = () => {
                     />
 
                     <div className="absolute top-0 right-0   left-0 opacity-[0.3] backdrop-blur-[132px] w-full h-full bg-gradient-to-b from-[#F8BEFC] to-[#F8BEFCB2] to-[70%]"></div>
-                    <div className="flex w-full bg-transparent  relative justify-between">
+                    <div className="flex w-full bg-transparent overflow-hidden bg  relative justify-between">
                         <div className={`absolute top-0 z-20 left-0 w-full h-full   ${isPlaying ? "bg-white" : ""} `}
                             style={{ animation: isPlaying ? 'line-segment 2s ease-in-out infinite' : 'none' }}
                         ></div>
