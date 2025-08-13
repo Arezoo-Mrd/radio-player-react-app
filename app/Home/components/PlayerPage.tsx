@@ -48,7 +48,7 @@ const PlayerPage = () => {
         </div>
     ) : (
         <div className="w-full h-full flex flex-col justify-between">
-            <div className="flex w-full justify-center h-full items-center">
+            <div id="radio_interneti_player_channel_selector" className="flex w-full justify-center h-full items-center">
                 <div className="w-[300px] h-[300px] flex flex-col items-center justify-center">
                     <div className="flex w-full items-center justify-between">
                         {data?.channels.map((channel, index) => {
