@@ -38,7 +38,7 @@ const PlayerPage = () => {
         }
     };
 
-    console.log('isPlaying', isPlaying)
+
 
 
 

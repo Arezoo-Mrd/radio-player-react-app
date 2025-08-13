@@ -10,7 +10,7 @@ export function meta({ }: Route.MetaArgs) {
 
 export default function Home() {
     return (
-        <main className="w-full h-full">
+        <main id="radio_interneti_player" className="w-full h-full">
             <PlayerPage />
         </main>
     );
