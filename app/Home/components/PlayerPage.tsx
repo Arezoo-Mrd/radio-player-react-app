@@ -74,7 +74,7 @@ const PlayerPage = () => {
                     </h5>
                 </div>
             </div>
-            <div className="h-fit flex max-w-full   items-end">
+            <div id="radio_interneti_player_bottom_nav_bar" className="h-fit flex max-w-full   items-end">
                 <img
                     src={data?.channels[selectedChannel]?.current_playing?.cover || "/mic.png"}
                     alt="player-bg"
