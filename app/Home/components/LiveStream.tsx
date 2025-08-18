@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PlayPauseBtn from "./PlayPauseBtn";
 import WaveVisualization from "./WaveVisualization";
-import Hls from "hls.js";
 
 export default function LiveStreamPlayer({
     streamUrl,
@@ -14,59 +13,128 @@ export default function LiveStreamPlayer({
     isPlaying: boolean;
     setIsPlaying: (isPlaying: boolean) => void;
 }) {
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
-    const hlsRef = useRef<Hls | null>(null);
+    const [streamKey, setStreamKey] = useState(0);
+    const isMounted = useRef(true);
+
+
+    const resetStream = () => {
+        if (!audioRef.current) return;
+
+        audioRef.current.pause();
+        audioRef.current.src = "";
+        audioRef.current.load();
+        setIsPlaying(false);
+
+
+        setStreamKey(prev => prev + 1);
+    };
+
+
+    const startNewStream = async () => {
+        if (!audioRef.current || !isMounted.current) return;
+
+        try {
+            setIsLoading(true);
+            setError("");
+
+            const newUrl = `${streamUrl}${streamUrl.includes('?') ? '&' : '?'}_=${Date.now()}`;
+
+            audioRef.current.src = newUrl;
+            audioRef.current.preload = "none";
+
+            await new Promise((resolve, reject) => {
+                if (!audioRef.current) return reject();
+
+                const onCanPlay = () => {
+                    audioRef.current?.removeEventListener('canplay', onCanPlay);
+                    resolve(true);
+                };
+
+                const onError = () => {
+                    audioRef.current?.removeEventListener('error', onError);
+                    reject();
+                };
+
+                audioRef.current.addEventListener('canplay', onCanPlay);
+                audioRef.current.addEventListener('error', onError);
+
+                audioRef.current.load();
+            });
+
+
+            await audioRef.current.play();
+            setIsPlaying(true);
+        } catch (err) {
+            setError("Failed to play stream. Please try again.");
+            setIsPlaying(false);
+        } finally {
+            if (isMounted.current) {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    const togglePlay = async () => {
+        if (isPlaying) {
+            resetStream();
+        } else {
+            await startNewStream();
+        }
+    };
 
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
 
-        // اگر Hls ساپورت میشه
-        if (Hls.isSupported()) {
-            const hls = new Hls({
-                liveDurationInfinity: true, // باعث میشه همیشه به لایو وصل بمونه
-            });
-            hls.loadSource(streamUrl);
-            hls.attachMedia(audio);
-            hlsRef.current = hls;
-
-            hls.on(Hls.Events.ERROR, (_, data) => {
-                console.error("HLS error:", data);
-                setError("Stream error. Trying to reconnect...");
-            });
-        }
-        // برای سافاری (که خودش HLS رو ساپورت می‌کنه)
-        else if (audio.canPlayType("application/vnd.apple.mpegurl")) {
-            audio.src = streamUrl;
-        }
-
-        return () => {
-            if (hlsRef.current) {
-                hlsRef.current.destroy();
-                hlsRef.current = null;
-            }
-        };
-    }, [streamUrl, audioRef]);
-
-    const togglePlay = async () => {
-        if (!audioRef.current) return;
-
-        if (isPlaying) {
-            audioRef.current.pause();
-            setIsPlaying(false);
-        } else {
+        const playNewStream = async () => {
             try {
                 setIsLoading(true);
-                await audioRef.current.play();
+                setError("");
+
+                const newUrl = `${streamUrl}${streamUrl.includes("?") ? "&" : "?"}_=${Date.now()}`;
+
+                // قطع پخش فعلی
+                audio.pause();
+                audio.src = newUrl;
+                audio.load();
+
+                await new Promise<void>((resolve, reject) => {
+                    const onCanPlay = () => {
+                        audio.removeEventListener("canplay", onCanPlay);
+                        resolve();
+                    };
+
+                    const onError = () => {
+                        audio.removeEventListener("error", onError);
+                        reject();
+                    };
+
+                    audio.addEventListener("canplay", onCanPlay);
+                    audio.addEventListener("error", onError);
+                });
+
+                await audio.play();
                 setIsPlaying(true);
             } catch (err) {
-                setError("Failed to play stream");
+                setError("Failed to play stream.");
+                setIsPlaying(false);
             } finally {
                 setIsLoading(false);
             }
+        };
+
+        if (isPlaying || audio.paused || audio.readyState === 0) {
+            playNewStream();
         }
-    };
+
+    }, [streamUrl]);
+
+
+
+
 
     return (
         <div className="w-full">
@@ -77,12 +145,13 @@ export default function LiveStreamPlayer({
                     isLoading={isLoading}
                     isPlaying={isPlaying}
                 />
+
             </div>
 
             <audio
+                key={`audio-${streamKey}`}
                 ref={audioRef}
                 preload="none"
-                autoPlay={false}
                 playsInline
                 webkit-playsinline="true"
                 crossOrigin="anonymous"
