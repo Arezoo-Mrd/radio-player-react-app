@@ -5,6 +5,7 @@ export function meta({ }: Route.MetaArgs) {
     return [
         { title: "Radio Player App" },
         { name: "description", content: "Welcome to Radio Player App!" },
+        {}
     ];
 }
 
