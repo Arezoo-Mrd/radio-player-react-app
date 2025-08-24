@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LiveBtn from "./LiveBtn";
 import { Heart } from "iconsax-react";
 import VolumeController from "./VolumeController";
@@ -14,6 +14,7 @@ type ActionBtnsProps = {
     isMuted: boolean;
     className?: string;
     musicId: number | undefined
+    currentMusicId: number | undefined
 };
 
 const ActionBtns = ({
@@ -23,10 +24,14 @@ const ActionBtns = ({
     isMuted,
     className,
     musicId,
-
+    currentMusicId
 }: ActionBtnsProps) => {
     const { mutate: likeMusicMutation, isSuccess } = useLikeMusicMutation()
+    const [isLiked, setIsLiked] = useState(false)
 
+    useEffect(() => {
+        setIsLiked(false)
+    }, [currentMusicId])
     return (
         <div
             className={twMerge(
@@ -38,15 +43,14 @@ const ActionBtns = ({
                 <LiveBtn />
             </div>
             <div className="flex w-full gap-4 items-center justify-end md:justify-start md:w-auto">
-                <Heart size={24} variant={isSuccess ? "Bold" : "Linear"} className="cursor-pointer" color="#FF3A3A" onClick={() => {
+                <Heart size={24} variant={isLiked ? "Bold" : "Linear"} className="cursor-pointer" color="#FF3A3A" onClick={() => {
 
                     if (musicId) {
                         likeMusicMutation({
                             music_id: musicId
                         }, {
-                            onSuccess: (data) => {
-                                toast.success("🙏 از حمایت شما با ثبت لایک صمیمانه سپاسگزاریم. امیدواریم از موزیک لذت برده باشید.")
-
+                            onSuccess: () => {
+                                setIsLiked(true)
                             },
                             onError: (error) => {
                                 toast.error(error.message)

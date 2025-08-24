@@ -48,7 +48,7 @@ const PlayerPage = () => {
         </div>
     ) : (
         <div className="w-full h-full flex flex-col justify-between">
-            <div id="radio_interneti_player_channel_selector" className="flex w-full justify-center h-full items-center">
+            <div id="radio_interneti_player_channel_selector" className="flex w-full mt-5 justify-center h-full items-center">
                 <div className="w-[300px] h-[300px] flex flex-col items-center justify-center">
                     <div className="flex w-full items-center justify-between">
                         {data?.channels.map((channel, index) => {
@@ -74,6 +74,7 @@ const PlayerPage = () => {
                     </h5>
                 </div>
             </div>
+            <iframe id="radio_interneti_player_iframe" className="w-full h-fit"></iframe>
             <div id="radio_interneti_player_bottom_nav_bar" className="h-fit flex max-w-full   items-end">
                 <img
                     src={data?.channels[selectedChannel]?.current_playing?.cover || "/mic.png"}
@@ -123,6 +124,7 @@ const PlayerPage = () => {
                             handleVolumeChange={handleVolumeChange}
                             volume={volume}
                             isMuted={isMuted}
+                            currentMusicId={data?.channels[selectedChannel].current_playing?.id}
                             musicId={data?.channels[selectedChannel].current_playing?.id}
                         />
                     </div>
@@ -137,6 +139,7 @@ const PlayerPage = () => {
                             handleVolumeChange={handleVolumeChange}
                             volume={volume}
                             isMuted={isMuted}
+                            currentMusicId={data?.channels[selectedChannel].current_playing?.id}
                             musicId={data?.channels[selectedChannel].current_playing?.id}
                         />
                     </div>
